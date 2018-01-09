@@ -3,8 +3,7 @@ import random
 import MySQLdb
 import MySQLdb.cursors
 from flask import Flask, make_response, redirect, request, render_template, url_for, flash, jsonify
-
-from v10 import servers
+from api import servers
 
 import glob
 
@@ -22,9 +21,9 @@ with open("api_response.json", "r") as f:
 glob.sql = MySQLdb.connect(**config["sql"], cursorclass = MySQLdb.cursors.DictCursor)
 
 @app.route("/v10/servers")
-def servers():
+def serve_servers():
     srv_list = servers.getServerList()
-    return jsonify(**srv_list)
+    return jsonify(srv_list)
 
 @app.errorhandler(404)
 def not_found(error):
@@ -43,7 +42,7 @@ def not_found(error):
         "message": msg
     }
 
-    return jsonify(**res)
+    return jsonify(res)
 
 if __name__ == "__main__":
     app.run(**config["web"])
