@@ -2,7 +2,7 @@ import json
 import random
 import MySQLdb
 import MySQLdb.cursors
-from flask import Flask, make_response, redirect, request, render_template, url_for, flash, jsonify
+from flask import Flask, make_response, redirect, request, render_template, url_for, flash, jsonify, Response
 from api import servers
 from api import update
 from api import changelog
@@ -56,7 +56,7 @@ def serve_changelog():
         return jsonify(res)
     else:
         res = changelog.getChangelog(False)
-        return res
+        return Response(res, mimetype="text/raw")
 
 @app.errorhandler(404)
 def not_found(error):
