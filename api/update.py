@@ -30,7 +30,8 @@ def path(i):
     rows = cursor.fetchall()
     if len(rows) == 0:
         raise Exception("Unable to find entry from file_version!")
-    
+
+    rows[0]["timestamp"] = str(rows[0]["timestamp"]) #Bootleg fix to make python return the right value instead of the timestamp as an object
     return rows[0]
     
 def latest():
