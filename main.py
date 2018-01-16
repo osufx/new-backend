@@ -30,24 +30,10 @@ def serve_servers():
 
 @app.route("/v10/update", methods=["GET"])
 def serve_update():
-    res = {"code": 200, "message": "no action specified"}
     action = request.args.get("action")
-    if action is not None:
-        if action == "check":
-            res = update.check()
-        elif action == "path":
-            target = request.args.get("target")
-            res["message"] = "no target specified"
-            if target is not None:
-                try:
-                    res = update.path(int(float(target)))
-                except:
-                    res["message"] = "invalid target file"
-        elif action == "latest":
-            res = update.latest()
-        else:
-            res["message"] = "invalid action"
-    return jsonify(res)
+    target = request.args.get("target")
+    res = update.getUpdateList(action, target)
+    return res
 
 @app.route("/v10/changelog", methods=["GET"])
 def serve_changelog():

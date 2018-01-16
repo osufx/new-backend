@@ -1,4 +1,23 @@
+from flask import jsonify
 import glob
+
+def getUpdateList(action, target):
+    res = {"code": 200, "message": "no action specified"}
+    if action is not None:
+        if action == "check":
+            res = check()
+        elif action == "path":
+            res["message"] = "no target specified"
+            if target is not None:
+                try:
+                    res = path(int(float(target)))
+                except:
+                    res["message"] = "invalid target file"
+        elif action == "latest":
+            res = latest()
+        else:
+            res["message"] = "invalid action"
+    return jsonify(res)
 
 def check():
     if glob.update_list == None:
