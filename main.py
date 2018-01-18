@@ -44,7 +44,11 @@ def serve_changelog():
         res = changelog.getChangelog(False)
         return Response(res, mimetype="text/raw")
 
+@app.errorhandler(500)
+@app.errorhandler(410)
 @app.errorhandler(404)
+@app.errorhandler(403)
+@app.errorhandler(401)
 def not_found(error):
     lookup = "common"
 
