@@ -57,7 +57,7 @@ def serve_data():
 @app.route("/v10/crash", methods=["GET", "POST"])
 def handle_crash():
     crash.handle_crash(request)
-    return "OK"
+    return jsonify({"code": 200, "message": "OK"})
 
 @app.errorhandler(500)
 @app.errorhandler(410)
