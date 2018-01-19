@@ -7,6 +7,7 @@ from api import servers
 from api import update
 from api import changelog
 from api import data
+from handlers import crash
 
 import glob
 
@@ -14,6 +15,8 @@ app = Flask(__name__)
 
 with open("config.json", "r") as f:
     config = json.load(f)
+
+glob.config = config
 
 with open("api_response.json", "r") as f:
     api_response = json.load(f)
@@ -50,6 +53,11 @@ def serve_data():
     s = request.args.get("s")
     res = data.getData(s)
     return jsonify(res)
+
+@app.route("/v10/crash", methods=["GET", "POST"])
+def handle_crash():
+    crash.handle_crash(request)
+    return "OK"
 
 @app.errorhandler(500)
 @app.errorhandler(410)

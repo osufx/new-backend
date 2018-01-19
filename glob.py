@@ -1,3 +1,4 @@
+config = None
 sql = None
 
 #Cache

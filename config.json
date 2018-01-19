@@ -11,5 +11,8 @@
     "user": "root",
     "passwd": "meme",
     "db": "osufx"
+  },
+  "handle": {
+    "crash": "/home/emily/crash/"
   }
 }
