@@ -27,11 +27,13 @@ glob.sql = MySQLdb.connect(**config["sql"], cursorclass = MySQLdb.cursors.DictCu
 def main_index():
     return "This be osufx backend ;)"
 
+@app.route("/v10/servers/")
 @app.route("/v10/servers")
 def serve_servers():
     srv_list = servers.getServerList()
     return jsonify(srv_list)
 
+@app.route("/v10/update/", methods=["GET"])
 @app.route("/v10/update", methods=["GET"])
 def serve_update():
     action = request.args.get("action")
@@ -39,6 +41,7 @@ def serve_update():
     res = update.getUpdateList(action, target)
     return res
 
+@app.route("/v10/changelog/", methods=["GET"])
 @app.route("/v10/changelog", methods=["GET"])
 def serve_changelog():
     if request.args.get("json") is not None:
@@ -48,12 +51,14 @@ def serve_changelog():
         res = changelog.getChangelog(False)
         return Response(res, mimetype="text/raw")
 
+@app.route("/v10/data/", methods=["GET"])
 @app.route("/v10/data", methods=["GET"])
 def serve_data():
     s = request.args.get("s")
     res = data.getData(s)
     return jsonify(res)
 
+@app.route("/v10/crash/", methods=["GET", "POST"])
 @app.route("/v10/crash", methods=["GET", "POST"])
 def handle_crash():
     crash.handle_crash(request)
