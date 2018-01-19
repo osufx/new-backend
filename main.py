@@ -6,6 +6,7 @@ from flask import Flask, make_response, redirect, request, render_template, url_
 from api import servers
 from api import update
 from api import changelog
+from api import data
 
 import glob
 
@@ -43,6 +44,12 @@ def serve_changelog():
     else:
         res = changelog.getChangelog(False)
         return Response(res, mimetype="text/raw")
+
+@app.route("/v10/data", methods=["GET"])
+def serve_data():
+    s = request.args.get("s")
+    res = data.getData(s)
+    return jsonify(res)
 
 @app.errorhandler(500)
 @app.errorhandler(410)

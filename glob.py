@@ -4,3 +4,4 @@ sql = None
 srv_list = None
 update_list = None
 changelog_list = None
+data_dist = {}
