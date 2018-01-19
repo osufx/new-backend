@@ -15,5 +15,4 @@ def cacheData(hash_str):
     cursor = glob.sql.cursor()
     cursor.execute("SELECT type,data,server FROM data_client WHERE server = '{}' ORDER BY id ASC".format(hash_str))
     rows = cursor.fetchall()
-    if len(rows) > 0:
-        glob.data_dist[hash_str] = rows
+    glob.data_dist[hash_str] = rows
